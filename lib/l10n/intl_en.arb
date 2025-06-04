@@ -1,0 +1,17 @@
+{
+  "@@locale": "en",
+  "@@last_modified": "2021-05-04T05:05:05.000Z",
+  "app_name": "Galgame Toolbox",
+  "app_description": "A new Flutter project.",
+  "app_title": "Flutter Demo Home Page",
+  "author": "Yuji Nakayama",
+  "app_version": "1.0.0",
+  "app_build_number": "1",
+  "app_build_name": "1.0.0",
+  "app_copyright": "Copyright © 2021 Yuji Nakayama. All rights reserved.",
+  "app_license": "MIT License",
+  "app_license_url": "https://opensource.org/licenses/MIT"
+
+
+
+}
