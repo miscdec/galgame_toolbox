@@ -4,7 +4,7 @@ import '../datasource/apps_local_db_data_source.dart';
 
 class  AppsRepository {
 
-  final AppsLocalDBDataSource _localDBDataSource;
+  final AppsLocalDBDataSourceImpl _localDBDataSource;
 
   AppsRepository(this._localDBDataSource);
 

@@ -43,7 +43,7 @@ class AppsDatabase extends _$AppsDatabase {
   // These are described in the getting started guide: https://drift.simonbinder.eu/setup/
   AppsDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection(
     file: checkAndRequestDBFile('apps'),
-    key: generateRandomKey(),
+    key: "1234567abcdef",
   ));
 
 

@@ -12,37 +12,37 @@ Future<Directory> getDataStorageDir() async {
   if (isPortableMode()) {
     return File(Platform.resolvedExecutable).parent;
   } else {
-    return await getApplicationSupportDirectory();
+    return await getApplicationDocumentsDirectory();
   }
 }
 
-Future<String> getDataStoragePath({required String dir}) async {
-  return "${(await getDataStorageDir()).path}/$dir";
-}
+// Future<String> getDataStoragePath({required String dir}) async {
+//   return "${(await getDataStorageDir()).path}/$dir";
+// }
 
-Future<Directory> getDBStorage() async {
-  final dir = await getDataStorageDir();
-  final dbDir = Directory("${dir.path}/database");
-  if (!dbDir.existsSync()) {
-    dbDir.createSync();
-  }
-  return dbDir;
-}
+// Future<Directory> getDBStorage() async {
+//   final dbDir = await getDataStoragePath(dir: 'database' );
+//   if (!dbDir.existsSync()) {
+//     dbDir.createSync();
+//   }
+//   return dbDir;
+// }
 
-Directory? getDBStoragePath() {
-  getDBStorage().then((dir) {
-    final dbDir = Directory("${dir.path}/database");
+Directory getDBStoragePath() {
+  Directory dbDir = Directory("");
+  getApplicationDocumentsDirectory().then((dir) {
+    dbDir = Directory("${dir.absolute.path}/database");
+    print('========================> dbDir:${dbDir.path}');
     if (!dbDir.existsSync()) {
       dbDir.createSync();
     }
-    return dbDir;
   });
-  return null;
+  return dbDir;
 }
 
 File checkAndRequestDBFile(String name) {
   final dbDir = getDBStoragePath();
-  final dbFile = File("$dbDir/$name.sqlite3");
+  final dbFile = File("${dbDir.absolute.path}/$name.sqlite3");
   if (!dbFile.existsSync()) {
     dbFile.createSync();
   }

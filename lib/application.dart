@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:galgame_toolbox/screens/app_home/home_page.dart';
 import 'package:galgame_toolbox/screens/launcher.dart';
 import 'package:galgame_toolbox/service_locator.dart';
 import 'package:galgame_toolbox/utils/platform.dart';
@@ -59,6 +60,11 @@ class Application implements Run {
             BlocProvider<GridLayoutSizeBloc>(
               create: (BuildContext context) => di<GridLayoutSizeBloc>()..add(
                 const SwitchGridSize(GridLayoutSize.medium)
+              ) ,
+            ),
+            BlocProvider<HomePageBloc>(
+              create: (BuildContext context) => di<HomePageBloc>()..add(
+                const FetchAppCategory()
               ) ,
             ),
           ],

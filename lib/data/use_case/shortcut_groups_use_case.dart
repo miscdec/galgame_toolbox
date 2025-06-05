@@ -2,7 +2,7 @@
 import '../datasource/apps_local_db_data_source.dart';
 
 class ShortcutGroupsUseCase { 
-  final AppsLocalDBDataSource _appsLocalDBDataSource;
+  final AppsLocalDBDataSourceImpl _appsLocalDBDataSource;
   ShortcutGroupsUseCase(this._appsLocalDBDataSource);
   
   Future<List<String>> getAppGroups() async {
