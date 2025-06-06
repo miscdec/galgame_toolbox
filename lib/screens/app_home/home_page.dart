@@ -123,6 +123,9 @@ class HomePageBloc extends Bloc<LayoutEvent, HomePageState> {
           entries: value,
           index: 0,
         )));
+      }).catchError((error, stackTrace) {
+        print('Error fetching app groups: $error\n$stackTrace');
+        emit(state.copyWith(entries: []));
       });
     });
     on<SelectPaneIndexChanged>((event, emit) async {

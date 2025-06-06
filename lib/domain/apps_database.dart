@@ -89,9 +89,16 @@ class AppsDatabase extends _$AppsDatabase {
   }
 
   Stream<List<String>> watchAllGroups() {
-    return select(apps)
-      .map((row) => row.group)
-      .watch();
+    return select(apps).watch().map((appList) {
+      // Extract unique group names from the list of apps
+      final groupSet = <String>{};
+      for (final app in appList) {
+        if (app.group.isNotEmpty) { // Optional: filter out empty group names
+          groupSet.add(app.group);
+        }
+      }
+      return groupSet.toList()..sort();
+    });
   }
 
 }
