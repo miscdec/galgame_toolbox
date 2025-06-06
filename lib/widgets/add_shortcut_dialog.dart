@@ -138,7 +138,6 @@ class _AddShortcutDialogState extends State<AddShortcutDialog> {
             ],
           ),
         ),
-      ),
       actions: [
         Button(
           child: const Text('Cancel'),

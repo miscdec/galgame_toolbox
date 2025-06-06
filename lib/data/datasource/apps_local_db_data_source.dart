@@ -24,7 +24,7 @@ abstract class AppsLocalDBDataSource {
   Stream<List<App>> watchAppsByType(int type);
 
   Future<void> addApps(List<App> apps);
-  Future<int> addApp(App app);
+  Future<int> addApp(AppsCompanion app);
 
   Future<void> updateApps(List<App> apps);
   Future<bool> updateApp(App app);
@@ -41,7 +41,7 @@ class AppsLocalDBDataSourceImpl implements AppsLocalDBDataSource {
   final AppsDatabase _db;
 
   @override
-  Future<int> addApp(App app) {
+  Future<int> addApp(AppsCompanion app) {
     return _db.into(_db.apps).insert(app);
   }
 

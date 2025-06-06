@@ -5,29 +5,11 @@ import 'package:galgame_toolbox/domain/apps_database.dart' show App, AppsCompani
 import 'package:galgame_toolbox/service_locator.dart';
 
 import '../data/use_case/app_shortcuts_use_case.dart';
+import '../models/layout_model.dart';
 import '../widgets/add_shortcut_dialog.dart';
 import '../widgets/delete_confirmation_dialog.dart';
 // import '../models/layout_model.dart'; // Assuming this will be replaced by definitions below
 
-// Base LayoutEvent
-abstract class LayoutEvent extends Equatable {
-  const LayoutEvent();
-
-  @override
-  List<Object?> get props => [];
-}
-
-// Base LayoutState
-abstract class LayoutState extends Equatable {
-  const LayoutState();
-
-  @override
-  List<Object?> get props => [];
-}
-
-class LayoutInitial extends LayoutState {
-  const LayoutInitial();
-}
 
 // LayoutLoaded State
 class LayoutLoaded<T> extends LayoutState {
@@ -42,9 +24,6 @@ class LayoutLoaded<T> extends LayoutState {
     required this.currentCategory,
     required this.timestamp,
   });
-
-  @override
-  List<Object?> get props => [entries, selectedShortcut, currentCategory, timestamp];
 
   LayoutLoaded<T> copyWith({
     T? entries,
@@ -110,6 +89,9 @@ class SelectShortcutEvent extends LayoutEvent {
 
 class ReloadShortcutsEvent extends LayoutEvent {
   const ReloadShortcutsEvent();
+
+  @override
+  List<Object?> get props => [];
 }
 
 class LayoutBloc extends Bloc<LayoutEvent, LayoutState> {
@@ -151,8 +133,8 @@ class LayoutBloc extends Bloc<LayoutEvent, LayoutState> {
         await appShortcutUseCase.deleteShortcut(event.shortcutToDelete);
         if (loadedState.selectedShortcut == event.shortcutToDelete) {
           emit(loadedState.copyWith(
-              selectedShortcut: null,
-              explicitlySetSelectedShortcut: true,
+            selectedShortcut: null,
+            explicitlySetSelectedShortcut: true,
           ));
           add(const ReloadShortcutsEvent());
         } else {
@@ -177,14 +159,14 @@ class LayoutBloc extends Bloc<LayoutEvent, LayoutState> {
 
         List<App> entries;
         if (categoryToReload.startsWith("filtered:")) {
-            entries = await appShortcutUseCase.getAppShortcutsByName(categoryToReload.replaceFirst("filtered:", ""));
+          entries = await appShortcutUseCase.getAppShortcutsByName(categoryToReload.replaceFirst("filtered:", ""));
         } else {
-            entries = await appShortcutUseCase.getAppShortcutsByCategory(categoryToReload);
+          entries = await appShortcutUseCase.getAppShortcutsByCategory(categoryToReload);
         }
 
         App? newSelectedShortcut;
         if (loadedState.selectedShortcut != null) {
-          newSelectedShortcut = entries.firstWhere((app) => app.id == loadedState.selectedShortcut!.id, orElse: () => null);
+          newSelectedShortcut = entries.firstWhere((app) => app.id == loadedState.selectedShortcut!.id);
         }
 
         emit(LayoutLoaded<List<App>>(
@@ -304,10 +286,10 @@ class Shortcut extends StatelessWidget {
                                 color: isSelected
                                     ? FluentTheme.of(context).accentColor?.withOpacity(0.3)
                                     : ButtonThemeData.uncheckedInputColor(
-                                        FluentTheme.of(context),
-                                        states,
-                                        transparentWhenNone: true,
-                                      ),
+                                  FluentTheme.of(context),
+                                  states,
+                                  transparentWhenNone: true,
+                                ),
                                 border: isSelected
                                     ? Border.all(color: FluentTheme.of(context).accentColor!, width: 2)
                                     : null,
