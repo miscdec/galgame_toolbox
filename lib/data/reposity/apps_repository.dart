@@ -43,4 +43,12 @@ class  AppsRepository {
   Stream<List<String>> watchAppGroups() {
     return _localDBDataSource.watchAppGroups();
   }
+
+  Future<int> addAppShortcut(AppsCompanion appCompanion) async {
+    return _localDBDataSource.addApp(appCompanion);
+  }
+
+  Future<int> deleteAppShortcut(App app) async {
+    return _localDBDataSource.deleteApp(app);
+  }
 }
