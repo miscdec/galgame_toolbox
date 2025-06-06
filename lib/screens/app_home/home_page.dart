@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galgame_toolbox/route/route_constants.dart';
 import 'package:galgame_toolbox/route/router.dart';
+import 'package:galgame_toolbox/screens/shortcut.dart' show kAllShortcutsCategoryIdentifier;
 import 'package:galgame_toolbox/theme.dart';
 import 'package:galgame_toolbox/widgets/window_button.dart';
 import 'package:go_router/go_router.dart';
@@ -322,18 +323,27 @@ class _AppHomePageState extends State<AppHomePage> with WindowListener {
                   ],
                   PaneItemSeparator(),
                   PaneItemHeader(header: const Text('Tools')),
+                  // The "All Shortcuts" item
+                  PaneItem(
+                    icon: const Icon(FluentIcons.bulleted_list), // Using a different icon for "All"
+                    title: const Text('All Shortcuts'),
+                    body: const SizedBox.shrink(),
+                    onTap: () {
+                      context.go('${RouteConstants.shortcut.routePath}/$kAllShortcutsCategoryIdentifier');
+                    },
+                  ),
+                  // Then the dynamic items from state.entries
                   ...state.entries!.map((e) {
-              return PaneItem(
-                icon: const Icon(FluentIcons.toolbox),
-                title: Text(e),
-                body: const SizedBox.shrink(),
-                onTap: () {
-                  // if (GoRouterState.of(context).uri.pathSegments != e) {
-                  context.go('${RouteConstants.shortcut.routePath}/$e');
-                  // }
-                },
-              );
-            }).toList()]),
+                    return PaneItem(
+                      icon: const Icon(FluentIcons.toolbox), // Or specific icons per category if available
+                      title: Text(e),
+                      body: const SizedBox.shrink(), // Required
+                      onTap: () {
+                        context.go('${RouteConstants.shortcut.routePath}/$e');
+                      },
+                    );
+                  }).toList()
+                ]),
             footerItems: footerItems,
           ),
           onOpenSearch: searchFocusNode.requestFocus,

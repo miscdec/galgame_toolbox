@@ -50,7 +50,7 @@ class AppCard extends StatelessWidget {
             spacing: 5,
             mainAxisSize: MainAxisSize.max,
             children: [
-              const Icon(
+              Icon(
                 FluentIcons.schedule_event_action,
                 color: Color(0xFF6C5CE7),
                 size: 14,
