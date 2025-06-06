@@ -3,6 +3,7 @@ import 'package:galgame_toolbox/data/use_case/shortcut_groups_use_case.dart';
 import 'package:galgame_toolbox/domain/apps_database.dart';
 import 'package:galgame_toolbox/screens/app_home/home_page.dart';
 import 'package:galgame_toolbox/screens/launcher.dart';
+import 'package:galgame_toolbox/screens/shortcut.dart';
 import 'package:get_it/get_it.dart';
 
 import 'data/datasource/apps_local_db_data_source.dart';
@@ -23,6 +24,7 @@ class ServiceLocator {
     di.registerLazySingleton(() => ShortcutGroupsUseCase(di.get()));
 
     di.registerFactory(() => HomePageBloc());
+    di.registerFactory(() => LayoutBloc());
   }
 
 }

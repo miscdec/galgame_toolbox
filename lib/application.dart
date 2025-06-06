@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galgame_toolbox/screens/app_home/home_page.dart';
 import 'package:galgame_toolbox/screens/launcher.dart';
+import 'package:galgame_toolbox/screens/shortcut.dart';
 import 'package:galgame_toolbox/service_locator.dart';
 import 'package:galgame_toolbox/utils/platform.dart';
 import 'package:galgame_toolbox/window_communicate/window_communicate_sample.dart';
@@ -67,6 +68,9 @@ class Application implements Run {
                 const FetchAppCategory()
               ) ,
             ),
+            BlocProvider<LayoutBloc>(
+              create: (BuildContext context) => di<LayoutBloc>(),
+            )
           ],
           child: const MainApp()
       )
