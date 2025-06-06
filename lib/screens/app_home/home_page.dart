@@ -13,6 +13,7 @@ import '../../data/use_case/shortcut_groups_use_case.dart';
 import '../../models/layout_model.dart';
 import '../../service_locator.dart';
 import '../launcher.dart';
+import '../shortcut.dart';
 
 class FetchAppCategory extends LayoutEvent {
   const FetchAppCategory() : super();
@@ -119,15 +120,15 @@ class HomePageBloc extends Bloc<LayoutEvent, HomePageState> {
     on<FetchAppCategory>((event, emit) async {
       shortcutGroupsUseCase.getAppGroups().then((value) async {
         await future.whenComplete(() => emit(state.copyWith(
-              entries: value,
-              index: 0,
-            )));
+          entries: value,
+          index: 0,
+        )));
       });
     });
     on<SelectPaneIndexChanged>((event, emit) async {
       await future.whenComplete(() => emit(state.copyWith(
-            index: event.index,
-          )));
+        index: event.index,
+      )));
     });
   }
 }
@@ -237,11 +238,11 @@ class _AppHomePageState extends State<AppHomePage> with WindowListener {
 
               final onPressed = enabled
                   ? () {
-                      if (router.canPop()) {
-                        context.pop();
-                        setState(() {});
-                      }
-                    }
+                if (router.canPop()) {
+                  context.pop();
+                  setState(() {});
+                }
+              }
                   : null;
               return NavigationPaneTheme(
                 data: NavigationPaneTheme.of(context),
@@ -276,13 +277,13 @@ class _AppHomePageState extends State<AppHomePage> with WindowListener {
               );
             }(),
             actions:
-                const Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            const Row(mainAxisAlignment: MainAxisAlignment.end, children: [
               if (!kIsWeb) WindowButtons(),
             ]),
           ),
           paneBodyBuilder: (item, child) {
             final name =
-                item?.key is ValueKey ? (item!.key as ValueKey).value : null;
+            item?.key is ValueKey ? (item!.key as ValueKey).value : null;
             return FocusTraversalGroup(
               key: ValueKey('body$name'),
               child: widget.child,
@@ -322,18 +323,23 @@ class _AppHomePageState extends State<AppHomePage> with WindowListener {
                   ],
                   PaneItemSeparator(),
                   PaneItemHeader(header: const Text('Tools')),
+                  // The "All Shortcuts" item
+                  PaneItem(
+                    key: const ValueKey('/shortcut/$kAllShortcutsCategoryIdentifier'),
+                    icon: const Icon(FluentIcons.bulleted_list), // Using a different icon for "All"
+                    title: const Text('All Shortcuts'),
+                    body: const SizedBox.shrink(),
+                  ),
+                  // Then the dynamic items from state.entries
                   ...state.entries!.map((e) {
-              return PaneItem(
-                icon: const Icon(FluentIcons.toolbox),
-                title: Text(e),
-                body: const SizedBox.shrink(),
-                onTap: () {
-                  // if (GoRouterState.of(context).uri.pathSegments != e) {
-                  context.go('${RouteConstants.shortcut.routePath}/$e');
-                  // }
-                },
-              );
-            }).toList()]),
+                    return PaneItem(
+                      key: ValueKey('/shortcut/$e'),
+                      icon: const Icon(FluentIcons.toolbox), // Or specific icons per category if available
+                      title: Text(e),
+                      body: const SizedBox.shrink(), // Required
+                    );
+                  })
+                ]),
             footerItems: footerItems,
           ),
           onOpenSearch: searchFocusNode.requestFocus,

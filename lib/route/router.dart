@@ -5,6 +5,7 @@ import 'package:galgame_toolbox/screens/about.dart';
 import 'package:galgame_toolbox/screens/launcher.dart';
 import 'package:galgame_toolbox/screens/settings.dart';
 import 'package:galgame_toolbox/screens/shortcut.dart';
+import 'package:galgame_toolbox/utils/logger.dart';
 import 'package:go_router/go_router.dart';
 
 import '../screens/app_home/home_page.dart';
@@ -27,10 +28,13 @@ final router = GoRouter(navigatorKey: rootNavigatorKey, routes: [
       GoRoute(path: RouteConstants.dashboard.routePath, builder: (context, state) => const Dashboard()),
       /// Shortcuts
       GoRoute(
-        path: '/shortcut/:groupId',
+        path: '${RouteConstants.shortcut.routePath}/:groupId',
         builder: (context, state) {
-          final groupId = state.pathParameters['groupId'];
-          return Shortcut(group: groupId ?? '-1');
+          log.info('Shortcut: ${state.pathParameters['groupId']}');
+          if (state.pathParameters['groupId'] == null) {
+            return const Shortcut(group: '__unknown_');
+          }
+          return Shortcut(group: state.pathParameters['groupId']!);
         },
       ),
       /// Settings

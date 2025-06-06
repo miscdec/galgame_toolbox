@@ -10,6 +10,7 @@ import '../widgets/add_shortcut_dialog.dart';
 import '../widgets/delete_confirmation_dialog.dart';
 // import '../models/layout_model.dart'; // Assuming this will be replaced by definitions below
 
+const String kAllShortcutsCategoryIdentifier = '__ALL_SHORTCUTS__';
 
 // LayoutLoaded State
 class LayoutLoaded<T> extends LayoutState {
@@ -99,7 +100,12 @@ class LayoutBloc extends Bloc<LayoutEvent, LayoutState> {
 
   LayoutBloc() : super(const LayoutInitial()) {
     on<InitialLayoutEvent>((event, emit) async {
-      final entries = await appShortcutUseCase.getAppShortcutsByCategory(event.category);
+      List<App> entries;
+      if (event.category == kAllShortcutsCategoryIdentifier) {
+        entries = await appShortcutUseCase.getAppShortcuts(); // Fetches all
+      } else {
+        entries = await appShortcutUseCase.getAppShortcutsByCategory(event.category);
+      }
       emit(LayoutLoaded<List<App>>(
         entries: entries,
         selectedShortcut: null,
@@ -158,7 +164,9 @@ class LayoutBloc extends Bloc<LayoutEvent, LayoutState> {
         final categoryToReload = loadedState.currentCategory;
 
         List<App> entries;
-        if (categoryToReload.startsWith("filtered:")) {
+        if (categoryToReload == kAllShortcutsCategoryIdentifier) {
+          entries = await appShortcutUseCase.getAppShortcuts(); // Fetches all
+        } else if (categoryToReload.startsWith("filtered:")) {
           entries = await appShortcutUseCase.getAppShortcutsByName(categoryToReload.replaceFirst("filtered:", ""));
         } else {
           entries = await appShortcutUseCase.getAppShortcutsByCategory(categoryToReload);

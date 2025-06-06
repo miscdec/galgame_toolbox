@@ -212,7 +212,7 @@ class _AddShortcutDialogState extends State<AddShortcutDialog> {
               );
 
               context.read<LayoutBloc>().add(AddShortcutEvent(newShortcut));
-              Navigator.of(context).pop();
+              Navigator.pop(context,"User add ");
 
             } else {
               // Show the first validation error using an InfoBar
