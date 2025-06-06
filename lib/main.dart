@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:galgame_toolbox/service_locator.dart';
 import 'package:galgame_toolbox/utils/drift.dart';
+import 'package:galgame_toolbox/utils/logger.dart';
 import 'package:system_theme/system_theme.dart';
 
 import 'application.dart';
@@ -13,6 +14,9 @@ import 'application.dart';
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   // await windowManager.ensureInitialized();
+
+  // Add cross-flavor configuration here
+  setupLogging();
 
   // if it's not on the web, windows or android, load the accent color
   if (!kIsWeb &&
@@ -25,9 +29,9 @@ Future<void> main(List<String> args) async {
 
   ServiceLocator.init();
 
+
+
   if(Platform.isAndroid) setupSqlCipher();
-
-
 
   Application app = Application();
   app.mainEntry(args);

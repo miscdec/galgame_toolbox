@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:galgame_toolbox/route/route_constants.dart';
 import 'package:galgame_toolbox/route/router.dart';
 import 'package:galgame_toolbox/theme.dart';
-import 'package:galgame_toolbox/widgets/window.dart';
+import 'package:galgame_toolbox/widgets/window_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/link.dart';
 import 'package:window_manager/window_manager.dart';

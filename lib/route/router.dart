@@ -1,7 +1,7 @@
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:galgame_toolbox/route/route_constants.dart';
 import 'package:galgame_toolbox/screens/dashboard.dart';
-import 'package:galgame_toolbox/screens/home.dart';
+import 'package:galgame_toolbox/screens/about.dart';
 import 'package:galgame_toolbox/screens/launcher.dart';
 import 'package:galgame_toolbox/screens/settings.dart';
 import 'package:galgame_toolbox/screens/shortcut.dart';

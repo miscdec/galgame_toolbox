@@ -58,7 +58,7 @@ String generateRandomKey() {
   return encryptedKey;
 }
 
-scanSoftwareShortcuts ({String path = "/shortcuts"}) async {
+void scanSoftwareShortcuts ({String path = "/shortcuts"}) async {
   final dir = await getDataStorageDir();
   final shortcutDir = Directory(dir.path + path);
   if (!shortcutDir.existsSync()) {

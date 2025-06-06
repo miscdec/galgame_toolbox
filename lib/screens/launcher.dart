@@ -106,12 +106,15 @@ class _LauncherState extends State<Launcher> {
                     label: Text('Add'),
                     onPressed: () {
                       log("launch");
+
                     },
                   ),
                   CommandBarButton(
                     icon: Icon(FluentIcons.edit),
                     label: Text('Edit'),
-                    onPressed: () {},
+                    onPressed: () {
+                      log("edit");
+                    },
                   ),
                   CommandBarButton(
                     icon: Icon(FluentIcons.delete),
@@ -136,15 +139,15 @@ class _LauncherState extends State<Launcher> {
 
                           return StatefulBuilder(builder: (context, setState) {
                             return MenuFlyout(items: [
-                              MenuFlyoutItem(
-                                text: const Text('Reset'),
-                                onPressed: () {
-                                  setState(() {
-                                    repeat = false;
-                                    shuffle = false;
-                                  });
-                                },
-                              ),
+                              // MenuFlyoutItem(
+                              //   text: const Text('Reset'),
+                              //   onPressed: () {
+                              //     setState(() {
+                              //       repeat = false;
+                              //       shuffle = false;
+                              //     });
+                              //   },
+                              // ),
                               const MenuFlyoutSeparator(),
                               ...GridLayout.values.map((e) {
                                 return MenuFlyoutItem(
@@ -165,23 +168,23 @@ class _LauncherState extends State<Launcher> {
                                   },
                                 );
                               }),
+                              // const MenuFlyoutSeparator(),
+                              // ToggleMenuFlyoutItem(
+                              //   text: const Text('Repeat'),
+                              //   value: repeat,
+                              //   onChanged: (v) {
+                              //     setState(() => repeat = v);
+                              //   },
+                              // ),
+                              // ToggleMenuFlyoutItem(
+                              //   text: const Text('Shuffle'),
+                              //   value: shuffle,
+                              //   onChanged: (v) {
+                              //     setState(() => shuffle = v);
+                              //   },
+                              // ),
                               const MenuFlyoutSeparator(),
-                              ToggleMenuFlyoutItem(
-                                text: const Text('Repeat'),
-                                value: repeat,
-                                onChanged: (v) {
-                                  setState(() => repeat = v);
-                                },
-                              ),
-                              ToggleMenuFlyoutItem(
-                                text: const Text('Shuffle'),
-                                value: shuffle,
-                                onChanged: (v) {
-                                  setState(() => shuffle = v);
-                                },
-                              ),
-                              const MenuFlyoutSeparator(),
-                              ...List.generate(GridLayoutSize.values.length, (index) {
+                              if(state.layout == GridLayout.grid) ...List.generate(GridLayoutSize.values.length, (index) {
                                 return RadioMenuFlyoutItem(
                                   trailing: Icon([
                                     FluentIcons.grid_view_small ,
